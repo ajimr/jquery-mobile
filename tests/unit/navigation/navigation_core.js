@@ -28,17 +28,16 @@
 		}
 	});
 
-	test( "Alert actual url", function() {
+	test( "actual url", function() {
 		ok( $.testHelper.url, "the url this page was accessed at: " + $.testHelper.url );
 	});
 
 	asyncTest( "window.history.back() from external to internal page", function(){
-
 		$.testHelper.pageSequence([
 
 			// open our test page
 			function(){
-				$.testHelper.openPage("#active-state-page1");
+				$.mobile.changePage("#active-state-page1");
 			},
 
 			function(){
@@ -50,12 +49,13 @@
 
 			function(){
 				ok( $.mobile.activePage[0] !== $( "#active-state-page1" )[ 0 ], "successful navigation to external page." );
-
+				ok( true, location.href );
 				window.history.back();
 			},
 
 			function(){
 				ok( $.mobile.activePage[0] === $( "#active-state-page1" )[ 0 ], "successful navigation back to internal page." );
+				ok( true, location.href );
 
 				start();
 			}
