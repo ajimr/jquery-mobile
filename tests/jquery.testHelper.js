@@ -261,6 +261,9 @@
 			}
 		},
 
+		// record the url before tests start monkeying with it
+		url: location.href,
+
 		navReset: function( url ) {
 			var pageReset = function( hash ) {
 				var timeout;

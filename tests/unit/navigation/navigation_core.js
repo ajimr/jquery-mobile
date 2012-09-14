@@ -28,6 +28,10 @@
 		}
 	});
 
+	test( "Alert actual url", function() {
+		ok( $.testHelper.url, "the url this page was accessed at: " + $.testHelper.url );
+	});
+
 	asyncTest( "window.history.back() from external to internal page", function(){
 
 		$.testHelper.pageSequence([
