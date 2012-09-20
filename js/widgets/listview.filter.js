@@ -22,8 +22,13 @@ $( document ).delegate( ":jqmData(role='listview')", "listviewcreate", function(
 
 	var list = $( this ),
 		listview = list.data( "listview" );
-
-	if ( !listview.options.filter ) {
+	
+	/*	
+		Check if the list has been created already by checking for it's UUID in the DOM by searching a new attribute added below.
+		as seen in issue #5016 the addition of other lists within a searchable list cause it to fire the 
+		listcreateview event twice and hence for each nested list the [data-filter="true"] list adds another searchbar
+	*/
+	if ( !listview.options.filter || $(":jqmData(list-id='" + listview.uuid + "')").length > 0 ) {
 		return;
 	}
 
@@ -35,6 +40,8 @@ $( document ).delegate( ":jqmData(role='listview')", "listviewcreate", function(
 			placeholder: listview.options.filterPlaceholder
 		})
 		.attr( "data-" + $.mobile.ns + "type", "search" )
+		// New data-list-id attribute added to allow the lists to be aware of their previous instantiation - see above re #5016
+		.attr( "data-" + $.mobile.ns + "list-id", listview.uuid )
 		.jqmData( "lastval", "" )
 		.bind( "keyup change", function() {
 
